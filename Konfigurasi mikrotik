@@ -1,0 +1,79 @@
+1. Persiapan dan Login
+ 
+- Sambungkan Kabel: Hubungkan kabel internet dari ISP (Modem) ke Ether1 MikroTik. Hubungkan komputer Anda ke port lain (misal Ether2) menggunakan kabel LAN.
+
+- Buka Winbox: Buka aplikasi Winbox, pilih tab Neighbors, klik pada MAC Address MikroTik yang muncul, lalu klik Connect.
+
+- Default User: admin, Password: (kosongkan).
+ 
+2. Mengambil Internet dari ISP (DHCP Client)
+ 
+Agar MikroTik mendapatkan internet dari modem:
+ 
+1. Buka menu IP > DHCP Client.
+
+2. Klik tanda + (tambah).
+
+3. Pilih Interface: ether1.
+
+4. Pastikan Use Peer DNS dan Add Default Route tercentang (yes).
+
+5. Klik OK. Jika statusnya "Bound", berarti MikroTik sudah dapat internet.
+ 
+3. Mengatur IP Address untuk Lokal (LAN)
+ 
+Agar komputer di bawah MikroTik punya jalur komunikasi:
+ 
+1. Buka menu IP > Addresses.
+
+2. Klik tanda +.
+
+3. Isi Address:  192.168.10.1/24  (contoh).
+
+4. Pilih Interface: ether2 (port yang ke komputer).
+
+5. Klik OK.
+ 
+4. Konfigurasi DNS
+ 
+1. Buka menu IP > DNS.
+
+2. Di kolom Servers, tambahkan DNS Google:  8.8.8.8  dan  8.8.4.4 .
+
+3. Centang Allow Remote Requests.
+
+4. Klik OK.
+ 
+5. Konfigurasi NAT (Agar Client Bisa Internetan)
+ 
+Ini langkah paling penting agar perangkat di jaringan lokal bisa mengakses internet:
+ 
+1. Buka menu IP > Firewall > tab NAT.
+
+2. Klik tanda +.
+
+3. Tab General: Chain =  srcnat , Out. Interface =  ether1 .
+
+4. Tab Action: Action =  masquerade .
+
+5. Klik OK.
+ 
+6. Membuat DHCP Server (Bagi IP Otomatis)
+ 
+Agar komputer klien tidak perlu setting IP manual:
+ 
+1. Buka menu IP > DHCP Server.
+
+2. Klik tombol DHCP Setup.
+
+3. Pilih Interface: ether2 (port lokal).
+
+4. Klik Next terus sampai selesai.
+ 
+7. Pengamanan Dasar
+ 
+Jangan biarkan router Anda tanpa pengamanan:
+ 
+- Ganti Password: Menu System > Password.
+
+- Ganti Nama Router: Menu System > Identity.
